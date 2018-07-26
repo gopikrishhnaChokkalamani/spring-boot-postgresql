@@ -1,6 +1,6 @@
 package com.springboot;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,15 +20,17 @@ public class StudentController {
 	private StudentRepository repository;
 
 	@GetMapping(path = "{name}")
-	public ResponseEntity<?> getStudentDetails(@PathVariable String name) {
-		Optional<Student> result = repository.findByName(name);
-		return result.map(response -> ResponseEntity.ok().body(response))
-				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	public ResponseEntity<List<Student>> getStudentDetails(@PathVariable String name) {
+		List<Student> result = repository.findByName(name);
+		if (result.size() == 0) {
+			throw new StudentNotFoundException();
+		}
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@PostMapping
 	public ResponseEntity<Student> insertStudentDetails(@RequestBody Student student) {
 		Student result = repository.save(student);
-		return new ResponseEntity<Student>(result, HttpStatus.CREATED);
+		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 }
