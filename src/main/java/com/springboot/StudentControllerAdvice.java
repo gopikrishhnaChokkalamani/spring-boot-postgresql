@@ -13,6 +13,6 @@ public class StudentControllerAdvice {
 		ErrorResponse response = new ErrorResponse();
 		response.setCode(Error.STUDENT_ERROR_CODE.value());
 		response.setMessage(Error.STUDENT_ERROR_MESSAGE.value());
-		return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 }
