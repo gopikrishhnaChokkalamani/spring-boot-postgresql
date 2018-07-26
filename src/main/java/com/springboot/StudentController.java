@@ -1,5 +1,7 @@
 package com.springboot;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +20,15 @@ public class StudentController {
 	private StudentRepository repository;
 
 	@GetMapping(path = "{name}")
-	public ResponseEntity<Student> getStudentDetails(@PathVariable String name) {
-		return new ResponseEntity<Student>(repository.findByName(name), HttpStatus.OK);
+	public ResponseEntity<?> getStudentDetails(@PathVariable String name) {
+		Optional<Student> result = repository.findByName(name);
+		return result.map(response -> ResponseEntity.ok().body(response))
+				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
 	@PostMapping
-	public ResponseEntity<String> insertStudentDetails(@RequestBody Student student) {
-		repository.save(student);
-		return new ResponseEntity<String>("Successfully installed", HttpStatus.OK);
+	public ResponseEntity<Student> insertStudentDetails(@RequestBody Student student) {
+		Student result = repository.save(student);
+		return new ResponseEntity<Student>(result, HttpStatus.CREATED);
 	}
 }
