@@ -1,0 +1,11 @@
+applications:
+- name: spring-boot-postgresql
+  path: target/spring-boot-postgresql-0.0.1-SNAPSHOT.jar
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git
+  instances: 1
+  memory: 1G
+  env:
+    JAVA_VERSION: 1.8.0_+
+    spring_jpa_hibernate_ddl-auto: update
+  services:
+  - my-postgresql
