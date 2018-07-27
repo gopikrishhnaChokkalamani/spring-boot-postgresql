@@ -3,6 +3,7 @@ package com.springboot;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +21,9 @@ public class StudentController {
 
 	@Autowired
 	private StudentRepository repository;
+
+	@Value("${configuration.property.value}")
+	private String from_config_server;
 
 	@GetMapping(path = "{name}")
 	public ResponseEntity<List<Student>> getStudentDetails(@PathVariable String name) {
@@ -46,5 +50,10 @@ public class StudentController {
 	public ResponseEntity<String> deleteStudentDetails(@PathVariable(name = "id") String id) {
 		repository.delete(id);
 		return new ResponseEntity<String>("deleted successfully", HttpStatus.OK);
+	}
+
+	@GetMapping(path = "/config")
+	public String fromConfigServer() {
+		return from_config_server;
 	}
 }

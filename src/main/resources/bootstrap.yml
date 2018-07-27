@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: spring-boot-postgresql
+security:
+  basic:
+    enabled: false
