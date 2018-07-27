@@ -9,3 +9,4 @@ applications:
     spring_jpa_hibernate_ddl-auto: update
   services:
   - my-postgresql
+  - config-server
