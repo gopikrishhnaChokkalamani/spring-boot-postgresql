@@ -1,4 +1,4 @@
-package com.springboot;
+package com.springboot.controller;
 
 import java.util.List;
 
@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.springboot.exception.StudentNotFoundException;
+import com.springboot.model.Student;
+import com.springboot.repository.StudentRepository;
 
 @RestController
 @RequestMapping("/student")
@@ -37,6 +41,8 @@ public class StudentController {
 	@PostMapping
 	public ResponseEntity<Student> insertStudentDetails(@RequestBody Student student) {
 		Student responseBody = repository.save(student);
+		responseBody.setResponseCode("created");
+		responseBody.setResponseMsg("record created in database");
 		return new ResponseEntity<>(responseBody, HttpStatus.CREATED);
 	}
 
