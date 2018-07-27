@@ -1,4 +1,4 @@
-package com.springboot;
+package com.springboot.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

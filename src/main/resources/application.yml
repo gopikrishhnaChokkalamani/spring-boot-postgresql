@@ -3,7 +3,15 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/gopikrishhnachokkalamani
     username: gopikrishhnachokkalamani
-    password: 
+    password: null
+  jpa:
+    hibernate:
+      ddl-auto: create
+  jackson:
+    deserialization:
+      read-unknown-enum-values-using-default-value: true
+      fail-on-numbers-for-enums: true
+      fail-on-unknown-properties: true
 server:
   port: 9090
 configuration:
