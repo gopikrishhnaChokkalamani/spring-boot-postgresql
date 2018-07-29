@@ -11,7 +11,7 @@ pipeline {
         }
         stage('code coverage') {
           steps {
-            jacoco(buildOverBuild: true)
+            jacoco()
           }
         }
         stage('checkstyle') {
