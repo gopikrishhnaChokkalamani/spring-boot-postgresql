@@ -1,16 +1,21 @@
 package com.springboot;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class SpringBootPostgresqlApplicationTests {
+import org.junit.Test;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import mockit.Tested;
+
+public class SpringBootPostgresqlApplicationTest {
+
+	@Tested
+	private SpringBootPostgresqlApplication tested;
 
 	@Test
-	public void contextLoads() {
+	public void haveSpringBootApplicationAnnotation() throws Exception {
+		assertThat(SpringBootPostgresqlApplication.class.getAnnotations().equals(SpringBootApplication.class),
+				notNullValue());
 	}
-
 }
