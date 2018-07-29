@@ -4,7 +4,6 @@ pipeline {
     stage('Build') {
       steps {
         sh 'mvn clean package'
-        tool(name: 'localMaven', type: 'maven')
       }
     }
     stage('code analysis') {
