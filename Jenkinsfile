@@ -4,10 +4,8 @@ pipeline {
     stage('Build') {
       steps {
         sh 'mvn clean package'
+        tool(name: 'localMaven', type: 'maven')
       }
     }
-  }
-  environment {
-    tools = 'maven \'localMaven\''
   }
 }
