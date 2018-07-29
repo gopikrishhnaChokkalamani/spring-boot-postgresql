@@ -6,7 +6,7 @@ pipeline {
         sh 'mvn clean package'
       }
     }
-    stage('Cloud Foundry') {
+    stage('Deploy & Report') {
       parallel {
         stage('Cloud Foundry') {
           steps {
