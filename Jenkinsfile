@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Code Coverage Report') {
           steps {
-            build(job: 'code-coverage', quietPeriod: 12, wait: true)
+            build(job: 'code-coverage', quietPeriod: 12)
           }
         }
         stage('Checkstyle Report') {
