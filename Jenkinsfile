@@ -18,7 +18,7 @@ pipeline {
             build(job: 'code-coverage', quietPeriod: 12, wait: true)
           }
         }
-        stage('') {
+        stage('checkstyle') {
           steps {
             checkstyle()
           }
