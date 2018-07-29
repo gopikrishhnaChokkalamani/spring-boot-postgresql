@@ -25,6 +25,11 @@ pipeline {
         }
       }
     }
+    stage('Approval') {
+      steps {
+        input(message: 'Deploy to Production', ok: 'Ok')
+      }
+    }
   }
   tools {
     maven 'localMaven'
