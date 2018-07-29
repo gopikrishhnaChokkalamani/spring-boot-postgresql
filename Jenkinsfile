@@ -11,7 +11,7 @@ pipeline {
         }
         stage('code coverage') {
           steps {
-            jacoco()
+            build(job: 'build \'jacoco-coverage-test\'', wait: true, quietPeriod: 30)
           }
         }
         stage('checkstyle') {
