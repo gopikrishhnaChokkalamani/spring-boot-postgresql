@@ -11,7 +11,7 @@ pipeline {
         }
         stage('code coverage') {
           steps {
-            jacoco()
+            jacoco(buildOverBuild: true)
           }
         }
         stage('checkstyle') {
@@ -21,7 +21,7 @@ pipeline {
         }
       }
     }
-    stage('') {
+    stage('error') {
       steps {
         pushToCloudFoundry(target: 'https://api.run.pivotal.io', organization: 'YetAnotherTechGuy', cloudSpace: 'development', credentialsId: 'Username: gopikrishhna@gmail.com, Password: Slytherin3#')
       }
