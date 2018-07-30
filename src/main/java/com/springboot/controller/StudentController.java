@@ -50,7 +50,10 @@ public class StudentController {
 
 	@PostMapping
 	public ResponseEntity<Student> insertStudentDetails(@RequestBody Student student) {
-		return new ResponseEntity<>(repository.save(student), HttpStatus.CREATED);
+		Student response = repository.save(student);
+		response.setResponseCode("success");
+		response.setResponseMsg("student record created successfully");
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
 	@PutMapping
