@@ -15,7 +15,7 @@ public enum Major {
 	}
 
 	@JsonValue
-	private String value() {
+	public String value() {
 		return value;
 	}
 }
