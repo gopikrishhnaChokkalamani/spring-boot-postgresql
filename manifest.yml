@@ -6,7 +6,7 @@ applications:
   memory: 1G
   env:
     JAVA_VERSION: 1.8.0_+
-    spring_jpa_hibernate_ddl-auto: update
+    spring_jpa_hibernate_ddl-auto: create
   services:
   - my-postgresql
   - config-server
