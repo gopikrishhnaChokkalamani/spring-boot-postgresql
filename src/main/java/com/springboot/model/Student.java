@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -24,7 +25,6 @@ public class Student implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@JsonProperty(access = Access.READ_ONLY)
 	@Id
 	// @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
 	// @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -58,10 +58,10 @@ public class Student implements Serializable {
 		this.responseMsg = responseMsg;
 	}
 
-	@JsonProperty(access = Access.READ_ONLY)
+	@Transient
 	private String responseCode;
 
-	@JsonProperty(access = Access.READ_ONLY)
+	@Transient
 	private String responseMsg;
 
 	public int getId() {
