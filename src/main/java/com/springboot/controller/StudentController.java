@@ -29,37 +29,33 @@ public class StudentController {
 	@Value("${configuration.property.value}")
 	private String from_config_server;
 
-	@GetMapping(path = "{name}")
-	public ResponseEntity<List<Student>> getStudentDetails(@PathVariable String name) {
-		List<Student> result = repository.findByName(name);
-		if (result.size() == 0) {
-			throw new StudentNotFoundException();
-		}
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
-
-	@PostMapping
-	public ResponseEntity<Student> insertStudentDetails(@RequestBody Student student) {
-		Student responseBody = repository.save(student);
-		responseBody.setResponseCode("created");
-		responseBody.setResponseMsg("record created in database");
-		return new ResponseEntity<>(responseBody, HttpStatus.CREATED);
-	}
-
-	@PutMapping
-	public ResponseEntity<Student> updateStudentDetails(@RequestBody Student student) {
-		Student responseBody = repository.saveAndFlush(student);
-		return new ResponseEntity<>(responseBody, HttpStatus.OK);
-	}
-
 	@DeleteMapping(path = "{id}")
 	public ResponseEntity<String> deleteStudentDetails(@PathVariable(name = "id") String id) {
 		repository.delete(id);
-		return new ResponseEntity<String>("deleted successfully", HttpStatus.OK);
+		return new ResponseEntity<>("deleted successfully", HttpStatus.OK);
 	}
 
 	@GetMapping(path = "/config")
 	public String fromConfigServer() {
 		return from_config_server;
+	}
+
+	@GetMapping(path = "{name}")
+	public ResponseEntity<List<Student>> getStudentDetails(@PathVariable String name) {
+		final List<Student> result = repository.findByName(name);
+		if (result.size() == 0)
+			throw new StudentNotFoundException();
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@PostMapping
+	public ResponseEntity<Student> insertStudentDetails(@RequestBody Student student) {
+		return new ResponseEntity<>(repository.save(student), HttpStatus.CREATED);
+	}
+
+	@PutMapping
+	public ResponseEntity<Student> updateStudentDetails(@RequestBody Student student) {
+		final Student responseBody = repository.saveAndFlush(student);
+		return new ResponseEntity<>(responseBody, HttpStatus.OK);
 	}
 }

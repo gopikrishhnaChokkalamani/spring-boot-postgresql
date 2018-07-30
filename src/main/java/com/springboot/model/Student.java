@@ -3,6 +3,7 @@ package com.springboot.model;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,17 +17,19 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
+@JsonInclude(Include.NON_EMPTY)
 @Entity
 @Table(name = "student")
-@JsonInclude(Include.NON_EMPTY)
 public class Student implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@JsonProperty(access = Access.READ_ONLY)
 	@Id
 	// @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
 	// @GenericGenerator(name = "uuid", strategy = "uuid2")
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "student_id")
 	private int id;
 
 	private String name;
