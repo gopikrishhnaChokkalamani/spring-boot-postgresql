@@ -1,5 +1,11 @@
 pipeline {
   agent any
+  tools {
+    maven 'localMaven'
+  }
+  triggers {
+    pollSCM('* * * * *')
+  }
   stages {
     stage('Build & Package') {
       parallel {
@@ -46,12 +52,6 @@ pipeline {
         input(message: 'Deploy to Production', ok: 'Ok')
       }
     }
-  }
-  tools {
-    maven 'localMaven'
-  }
-  triggers {
-    pollSCM('* * * * *')
   }
   post {
         always {
