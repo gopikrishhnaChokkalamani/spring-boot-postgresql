@@ -1,5 +1,11 @@
 pipeline {
   agent any
+  tools {
+    maven 'localMaven'
+  }
+  triggers {
+    pollSCM('* * * * *')
+  }
   stages {
     stage('Build') {
       steps {
@@ -9,6 +15,12 @@ pipeline {
     stage('Test') {
       steps {
         sh 'mvn test'
+      }
+      post {
+        always {
+          archiveArtifacts artifacts: '**/*.jar', fingerprint: true
+          junit 'target/surefire-reports/*.xml'
+        }
       }
     }
     stage('Deploy & Report') {
@@ -31,22 +43,15 @@ pipeline {
       }
     }
     stage('Deploy : Production') {
+      steps {
+        input(message: 'Do you want to deploy to Production?', ok: 'Ok', submitter: 'john_wayne')
+      }
       post {
         success {
           pushToCloudFoundry(cloudSpace: 'development', credentialsId: '5238d35a-9e8e-49ec-b03d-9213a3a401fc', organization: 'miruthika86-org', pluginTimeout: '240', target: 'https://api.run.pivotal.io')
 
         }
-
-      }
-      steps {
-        input(message: 'Do you want to deploy to Production?', ok: 'Ok', submitter: 'john_wayne')
       }
     }
-  }
-  tools {
-    maven 'localMaven'
-  }
-  triggers {
-    pollSCM('* * * * *')
   }
 }
