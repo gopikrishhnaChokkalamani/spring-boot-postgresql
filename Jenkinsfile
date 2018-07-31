@@ -49,7 +49,7 @@ pipeline {
 
       }
       steps {
-        input(message: 'Deploy to Production', ok: 'Ok')
+        input(message: 'Deploy to Production', ok: 'Ok', submitter: 'john_wayne')
       }
     }
   }
