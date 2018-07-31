@@ -25,7 +25,7 @@ public class SpringBootPostgresqlApplicationTest {
 	}
 
 	@Test
-	public void verifyInitialStartup() throws Exception {
+	public void runSpringApplication() throws Exception {
 		final String[] args = new String[] {};
 		SpringBootPostgresqlApplication.main(args);
 		new Verifications() {
