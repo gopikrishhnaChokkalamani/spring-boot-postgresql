@@ -9,12 +9,12 @@ pipeline {
   stages {
     stage('Build & Package') {
       parallel {
-        stage('Build & Package') {
+        stage('build') {
           steps {
             sh 'mvn clean package'
           }
         }
-        stage('Test') {
+        stage('test') {
           steps {
             sh 'mvn test'
           }
