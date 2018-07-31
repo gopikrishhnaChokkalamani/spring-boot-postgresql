@@ -1,10 +1,12 @@
 package com.springboot.advice;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -18,20 +20,31 @@ import com.springboot.model.ErrorResponse;
 public class StudentControllerAdvice {
 
 	@ExceptionHandler
+	public ResponseEntity<ErrorResponse> handleStudentNotFoundException(HttpMessageNotReadableException exception) {
+		final ErrorResponse response = new ErrorResponse();
+		final JsonMappingException jsonException = (JsonMappingException) exception.getCause();
+		response.setCode(Error.UNKNOWN_PROPERTY_ERROR_CODE.value());
+		response.setMessage(
+				jsonException.getPath().stream().map(Reference::getFieldName).collect(Collectors.joining(".")));
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler
 	public ResponseEntity<ErrorResponse> handleStudentNotFoundException(StudentNotFoundException exception) {
-		ErrorResponse response = new ErrorResponse();
+		final ErrorResponse response = new ErrorResponse();
 		response.setCode(Error.NO_DATA_ERROR_CODE.value());
 		response.setMessage(Error.NO_DATA_ERROR_MESSAGE.value());
 		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler
-	public ResponseEntity<ErrorResponse> handleStudentNotFoundException(HttpMessageNotReadableException exception) {
-		ErrorResponse response = new ErrorResponse();
-		JsonMappingException jsonException = (JsonMappingException) exception.getCause();
-		response.setCode(Error.UNKNOWN_PROPERTY_ERROR_CODE.value());
-		response.setMessage(
-				jsonException.getPath().stream().map(Reference::getFieldName).collect(Collectors.joining(".")));
-		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	public ResponseEntity<List<ErrorResponse>> handleValidationErrors(MethodArgumentNotValidException exception) {
+		List<ErrorResponse> response = exception.getBindingResult().getFieldErrors().stream().map(t-> {
+			ErrorResponse e = new ErrorResponse();
+			e.setCode(t.getCode());
+			e.setMessage(t.getDefaultMessage());
+			return e;
+		}).collect(Collectors.toList());
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST); 
 	}
 }

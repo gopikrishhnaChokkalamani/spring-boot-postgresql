@@ -2,67 +2,25 @@ package com.springboot.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @JsonInclude(Include.NON_EMPTY)
-@Entity
-@Table(name = "student")
 public class Student implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	// @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
-	// @GenericGenerator(name = "uuid", strategy = "uuid2")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "student_id")
 	private int id;
 
 	private String name;
 
 	private String age;
 
-	@OneToOne(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "address_id")
 	private Address address;
 
 	private Major major;
-
-	public String getResponseCode() {
-		return responseCode;
-	}
-
-	public void setResponseCode(String responseCode) {
-		this.responseCode = responseCode;
-	}
-
-	public String getResponseMsg() {
-		return responseMsg;
-	}
-
-	public void setResponseMsg(String responseMsg) {
-		this.responseMsg = responseMsg;
-	}
-
-	@Transient
-	private String responseCode;
-
-	@Transient
-	private String responseMsg;
+	
+	private ResponseMessage response;
 
 	public int getId() {
 		return id;
@@ -102,5 +60,13 @@ public class Student implements Serializable {
 
 	public void setMajor(Major major) {
 		this.major = major;
+	}
+
+	public ResponseMessage getResponse() {
+		return response;
+	}
+
+	public void setResponse(ResponseMessage response) {
+		this.response = response;
 	}
 }

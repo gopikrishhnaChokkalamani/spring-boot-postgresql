@@ -13,12 +13,12 @@ public class ErrorResponse {
 		return code;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
-	}
-
 	public String getMessage() {
 		return message;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public void setMessage(String message) {

@@ -1,15 +1,21 @@
-package com.springboot.model;
+package com.springboot.entity;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@JsonInclude(Include.NON_EMPTY)
-public class Address implements Serializable {
+@Entity
+@Table(name = "address")
+public class AddressEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int address_id;
 
 	private String houseNumber;

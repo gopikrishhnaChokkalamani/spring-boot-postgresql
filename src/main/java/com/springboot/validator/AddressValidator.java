@@ -8,29 +8,30 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import com.springboot.model.Student;
+import com.springboot.model.Address;
+import com.springboot.property.AddressProperty;
 import com.springboot.property.Property;
-import com.springboot.property.StudentProperty;
 
 @Component
-public class StudentValidator implements Validator {
+public class AddressValidator implements Validator {
 
 	@Autowired
 	private ValidationRegistry registry;
 
 	@Autowired
-	private StudentProperty studentProperty;
+	private AddressProperty aaddressProperty;
 
 	@Override
-	public boolean supports(Class<?> clazz) {
-		return Student.class.equals(clazz);
+	public boolean supports(Class<?> arg0) {
+		return Address.class.equals(arg0);
 	}
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		Student student = (Student) target;
-		List<Property> properties = studentProperty.getProperty();
+		final Address address = (Address) target;
+		final List<Property> properties = aaddressProperty.getProperty();
 		properties.forEach(t -> registry.getValidationService(t.getValidator())
-				.invokeValidationOn(new BeanWrapperImpl(student).getPropertyValue(t.getField()), errors, t));
+				.invokeValidationOn(new BeanWrapperImpl(address).getPropertyValue(t.getField()), errors, t));
+		errors.popNestedPath();
 	}
 }

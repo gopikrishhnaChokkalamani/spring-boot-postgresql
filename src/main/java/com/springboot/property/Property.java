@@ -16,39 +16,39 @@ public class Property implements Serializable {
 		return field;
 	}
 
-	public void setField(String field) {
-		this.field = field;
-	}
-
-	public String getValidator() {
-		return validator;
-	}
-
-	public void setValidator(String validator) {
-		this.validator = validator;
+	public String getFormat() {
+		return format;
 	}
 
 	public String getMaxlength() {
 		return maxlength;
 	}
 
-	public void setMaxlength(String maxlength) {
-		this.maxlength = maxlength;
-	}
-
 	public String getMinlength() {
 		return minlength;
+	}
+
+	public String getValidator() {
+		return validator;
+	}
+
+	public void setField(String field) {
+		this.field = field;
+	}
+
+	public void setFormat(String format) {
+		this.format = format;
+	}
+
+	public void setMaxlength(String maxlength) {
+		this.maxlength = maxlength;
 	}
 
 	public void setMinlength(String minlength) {
 		this.minlength = minlength;
 	}
 
-	public String getFormat() {
-		return format;
-	}
-
-	public void setFormat(String format) {
-		this.format = format;
+	public void setValidator(String validator) {
+		this.validator = validator;
 	}
 }
