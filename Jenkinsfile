@@ -18,6 +18,12 @@ pipeline {
           steps {
             sh 'mvn test'
           }
+          post {
+            always {
+              archiveArtifacts artifacts: '**/*.jar', fingerprint: true
+              junit 'target/surefire-reports/*.xml'
+            }
+          }
         }
       }
     }
@@ -53,10 +59,4 @@ pipeline {
       }
     }
   }
-  post {
-        always {
-          archiveArtifacts artifacts: '**/*.jar', fingerprint: true
-          junit 'target/surefire-reports/*.xml'
-        }
-    }
 }
