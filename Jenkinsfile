@@ -1,30 +1,9 @@
 pipeline {
   agent any
-  tools {
-    maven 'localMaven'
-  }
-  triggers {
-    pollSCM('* * * * *')
-  }
   stages {
-    stage('Build & Package') {
-      parallel {
-        stage('build') {
-          steps {
-            sh 'mvn clean package'
-          }
-        }
-        stage('test') {
-          steps {
-            sh 'mvn test'
-          }
-          post {
-            always {
-              archiveArtifacts artifacts: '**/*.jar', fingerprint: true
-              junit 'target/surefire-reports/*.xml'
-            }
-          }
-        }
+    stage('build') {
+      steps {
+        sh 'mvn clean package'
       }
     }
     stage('Deploy & Report') {
@@ -44,6 +23,11 @@ pipeline {
             checkstyle()
           }
         }
+        stage('test') {
+          steps {
+            sh 'mvn test'
+          }
+        }
       }
     }
     stage('Deploy : Production') {
@@ -58,5 +42,11 @@ pipeline {
         input(message: 'Do you want to deploy to Production?', ok: 'Ok', submitter: 'john_wayne')
       }
     }
+  }
+  tools {
+    maven 'localMaven'
+  }
+  triggers {
+    pollSCM('* * * * *')
   }
 }
