@@ -2,8 +2,17 @@ pipeline {
   agent any
   stages {
     stage('Build & Package') {
-      steps {
-        sh 'mvn clean package'
+      parallel {
+        stage('Build & Package') {
+          steps {
+            sh 'mvn clean package'
+          }
+        }
+        stage('Test') {
+          steps {
+            sh 'sh \'mvn test\''
+          }
+        }
       }
     }
     stage('Deploy & Report') {
@@ -26,13 +35,15 @@ pipeline {
       }
     }
     stage('Approval') {
-      steps {
-        input(message: 'Deploy to Production', ok: 'Ok')
-      }
       post {
         success {
-          pushToCloudFoundry cloudSpace: 'development', credentialsId: '5238d35a-9e8e-49ec-b03d-9213a3a401fc', organization: 'miruthika86-org', pluginTimeout: '240', target: 'https://api.run.pivotal.io'
+          pushToCloudFoundry(cloudSpace: 'development', credentialsId: '5238d35a-9e8e-49ec-b03d-9213a3a401fc', organization: 'miruthika86-org', pluginTimeout: '240', target: 'https://api.run.pivotal.io')
+
         }
+
+      }
+      steps {
+        input(message: 'Deploy to Production', ok: 'Ok')
       }
     }
   }
