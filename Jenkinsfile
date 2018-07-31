@@ -56,7 +56,7 @@ pipeline {
   post {
         always {
             archiveArtifacts artifacts: '**/*.jar', fingerprint: true
-            junit '**/*.xml'
+            junit '**/site/jacoco/jacoco.xml'
         }
     }
 }
