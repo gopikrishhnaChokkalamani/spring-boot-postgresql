@@ -1,9 +1,14 @@
 pipeline {
   agent any
   stages {
-    stage('build') {
+    stage('Build') {
       steps {
         sh 'mvn clean package'
+      }
+    }
+    stage('Test') {
+      steps {
+        sh 'mvn test'
       }
     }
     stage('Deploy & Report') {
@@ -21,11 +26,6 @@ pipeline {
         stage('checkstyle report') {
           steps {
             checkstyle()
-          }
-        }
-        stage('test') {
-          steps {
-            sh 'mvn test'
           }
         }
       }
