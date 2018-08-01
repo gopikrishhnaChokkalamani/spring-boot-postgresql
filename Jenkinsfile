@@ -12,6 +12,7 @@ pipeline {
           archiveArtifacts(artifacts: '**/*.jar', fingerprint: true)
           junit 'target/surefire-reports/*.xml'
           cucumber '**/cucumber.json'
+          cucumber fileIncludePattern: 'target/cucumber.json', sortingMethod: 'ALPHABETICAL'
         }
 
       }
