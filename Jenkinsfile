@@ -17,7 +17,7 @@ pipeline {
 
       }
       steps {
-        sh 'mvn test'
+        sh 'mvn test verify'
       }
     }
     stage('Deploy & Report') {
