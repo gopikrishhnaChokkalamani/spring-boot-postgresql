@@ -11,7 +11,6 @@ pipeline {
         always {
           archiveArtifacts(artifacts: '**/*.jar', fingerprint: true)
           junit 'target/surefire-reports/*.xml'
-          cucumber '**/cucumber.json'
           cucumber fileIncludePattern: '**/spring-boot-postgresql/target/cucumber.json', sortingMethod: 'ALPHABETICAL'
         }
 
