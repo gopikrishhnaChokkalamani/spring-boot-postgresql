@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springboot.entity.AddressEntity;
-import com.springboot.entity.StudentEntity;
 import com.springboot.model.Student;
 import com.springboot.service.StudentService;
 import com.springboot.validator.StudentValidator;
