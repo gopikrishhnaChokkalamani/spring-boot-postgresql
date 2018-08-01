@@ -63,7 +63,7 @@ public class StudentService {
 		student.setAddress(address);
 		ResponseMessage message = new ResponseMessage();
 		message.setResponseCode("success");
-		message.setResponseMsg("record added to database!!!");
+		message.setResponseMsg("record added to database");
 		student.setResponse(message);
 		return student;
 	}
