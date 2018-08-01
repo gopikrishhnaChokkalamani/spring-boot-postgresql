@@ -11,7 +11,7 @@ pipeline {
         always {
           archiveArtifacts(artifacts: '**/*.jar', fingerprint: true)
           junit 'target/surefire-reports/*.xml'
-
+          cucumber '**/*.json'
         }
 
       }
